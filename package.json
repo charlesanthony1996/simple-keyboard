@@ -9,6 +9,7 @@
     "build-modern": "webpack --config webpack.config.modern.js",
     "test": "jest --silent",
     "coverage": "npm run test -- --coverage",
+    "prepare": "npm run build",
     "trypublish": "npm publish || true"
   },
   "repository": {
