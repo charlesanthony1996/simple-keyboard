@@ -17,12 +17,17 @@ class PhysicalKeyboard {
      */
     this.dispatch = dispatch;
     this.getOptions = getOptions;
+    
+    
 
     /**
      * Bindings
      */
     Utilities.bindMethods(PhysicalKeyboard, this);
   }
+  timers: { [key: string]: NodeJS.Timeout } = {};
+
+  
 
   handleHighlightKeyDown(e: KeyboardEvent) {
     const options = this.getOptions();
@@ -33,6 +38,12 @@ class PhysicalKeyboard {
     }
 
     const buttonPressed = this.getSimpleKeyboardLayoutKey(e);
+
+    // Start a timer when a key is pressed
+    this.timers[buttonPressed] = setTimeout(() => {
+      // This code will be executed if the key is not released before the timer ends
+      console.log(`Long press detected for key: ${buttonPressed}`);
+    }, 1000); // Set the timer duration to 1000 milliseconds (1 second)
 
     this.dispatch((instance: any) => {
       const standardButtonPressed = instance.getButtonElement(buttonPressed);
@@ -90,6 +101,8 @@ class PhysicalKeyboard {
     });
   }
 
+  
+
   handleHighlightKeyUp(e: KeyboardEvent) {
     const options = this.getOptions();
 
@@ -99,6 +112,15 @@ class PhysicalKeyboard {
     }
     
     const buttonPressed = this.getSimpleKeyboardLayoutKey(e);
+
+    // Check if a timer exists for the released key
+    if (this.timers[buttonPressed]) {
+      // Clear the timer
+      clearTimeout(this.timers[buttonPressed]);
+
+      // Remove the timer from the timers object
+      delete this.timers[buttonPressed];
+    }
 
     this.dispatch((instance: any) => {
       const buttonDOM =
