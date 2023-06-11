@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { KeyboardOptions, PhysicalKeyboardParams } from "../interfaces";
 /**
  * Physical Keyboard Service
@@ -9,6 +10,9 @@ declare class PhysicalKeyboard {
      * Creates an instance of the PhysicalKeyboard service
      */
     constructor({ dispatch, getOptions }: PhysicalKeyboardParams);
+    timers: {
+        [key: string]: NodeJS.Timeout;
+    };
     handleHighlightKeyDown(e: KeyboardEvent): void;
     handleHighlightKeyUp(e: KeyboardEvent): void;
     /**
