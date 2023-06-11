@@ -25,25 +25,34 @@ class PhysicalKeyboard {
      */
     Utilities.bindMethods(PhysicalKeyboard, this);
   }
-  timers: { [key: string]: NodeJS.Timeout } = {};
+    timers: { [key: string]: NodeJS.Timeout } = {};
 
   
 
   handleHighlightKeyDown(e: KeyboardEvent) {
     const options = this.getOptions();
 
-    if(options.physicalKeyboardHighlightPreventDefault && this.isMofifierKey(e)){
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }
+  if(options.physicalKeyboardHighlightPreventDefault && this.isMofifierKey(e)){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
 
-    const buttonPressed = this.getSimpleKeyboardLayoutKey(e);
+  const buttonPressed = this.getSimpleKeyboardLayoutKey(e);
 
-    // Start a timer when a key is pressed
-    this.timers[buttonPressed] = setTimeout(() => {
-      // This code will be executed if the key is not released before the timer ends
-      console.log(`Long press detected for key: ${buttonPressed}`);
-    }, 1000); // Set the timer duration to 1000 milliseconds (1 second)
+  // Start a timer when a key is pressed
+  this.timers[buttonPressed] = setTimeout(() => {
+    // This code will be executed if the key is not released before the timer ends
+    console.log(`Long press detected for key: ${buttonPressed}`);
+
+    // Emit an event
+    this.dispatch((instance: any) => {
+      if (typeof instance.options.onLongPress === 'function') {
+        instance.options.onLongPress(buttonPressed);
+      }
+    });
+  }, 1500); 
+
+    
 
     this.dispatch((instance: any) => {
       const standardButtonPressed = instance.getButtonElement(buttonPressed);
