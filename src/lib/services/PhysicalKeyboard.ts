@@ -30,6 +30,7 @@ class PhysicalKeyboard {
   
 
   handleHighlightKeyDown(e: KeyboardEvent) {
+    console.log("from the forked repo!")
     const options = this.getOptions();
 
   if(options.physicalKeyboardHighlightPreventDefault && this.isMofifierKey(e)){
@@ -122,14 +123,14 @@ class PhysicalKeyboard {
     
     const buttonPressed = this.getSimpleKeyboardLayoutKey(e);
 
-    // Check if a timer exists for the released key
-    if (this.timers[buttonPressed]) {
-      // Clear the timer
-      clearTimeout(this.timers[buttonPressed]);
+    // // Check if a timer exists for the released key
+    // if (this.timers[buttonPressed]) {
+    //   // Clear the timer
+    //   clearTimeout(this.timers[buttonPressed]);
 
-      // Remove the timer from the timers object
-      delete this.timers[buttonPressed];
-    }
+    //   // Remove the timer from the timers object
+    //   delete this.timers[buttonPressed];
+    // }
 
     this.dispatch((instance: any) => {
       const buttonDOM =
