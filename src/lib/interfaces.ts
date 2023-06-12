@@ -286,6 +286,9 @@ export interface KeyboardOptions {
      */
     onKeyPress?: (button: string, e?: MouseEvent) => any;
 
+    // added long press
+    onLongPress?: (button: string,e?: MouseEvent) => any;
+
     /**
      * Retrieves the released key
      */
