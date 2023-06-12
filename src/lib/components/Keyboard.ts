@@ -494,6 +494,14 @@ class SimpleKeyboard {
     if (typeof this.options.onKeyPress === "function")
       this.options.onKeyPress(button, e);
 
+     // Check if this was a long press
+    if (this.isMouseHold) {
+    // If it was a long press, call the onLongPress function if it's defined
+    if (typeof this.options.onLongPress === "function") {
+      this.options.onLongPress(button, e);
+      }
+    } else {
+
     if (
       // If input will change as a result of this button press
       this.input[inputName] !== updatedInput &&
@@ -512,6 +520,7 @@ class SimpleKeyboard {
       ) {
         return;
       }
+    }
 
       /**
        * Updating input
@@ -634,6 +643,24 @@ class SimpleKeyboard {
     }
 
     if (this.holdInteractionTimeout) clearTimeout(this.holdInteractionTimeout);
+
+    /**
+   * @type {object} Timeout dictating the speed of key hold iterations
+   */
+  this.holdInteractionTimeout = window.setTimeout(() => {
+    if (this.getMouseHold()) {
+      this.handleButtonClicked(button);
+      
+      // Call the onLongPress function if it's defined
+      if (typeof this.options.onLongPress === "function") {
+        this.options.onLongPress(button);
+      }
+
+      this.handleButtonHold(button);
+    } else {
+      clearTimeout(this.holdInteractionTimeout);
+    }
+  }, 100);
     if (this.holdTimeout) clearTimeout(this.holdTimeout);
 
     /**
