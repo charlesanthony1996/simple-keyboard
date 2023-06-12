@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Long Press Event</title>
+  <style>
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #eee;
+      cursor: pointer;
+      user-select: none;
+      position: absolute;
+      left: 45%;
+      top: 10%;
+    }
+
+    .button-press-options {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      z-index: 1;
+    }
+
+    .button-press-options button {
+      display: block;
+      padding: 5px;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="button" id="button">
+    Press and hold me
+    <div class="button-press-options" id="buttonPressOptions">
+      <button>Option 1</button>
+      <button>Option 2</button>
+      <button>Option 3</button>
+    </div>
+  </div>
+
+  <script>
+    var button = document.getElementById('button');
+    var buttonPressOptions = document.getElementById('buttonPressOptions');
+    var pressTimer;
+
+    button.addEventListener('mousedown', function() {
+      pressTimer = window.setTimeout(function() {
+        buttonPressOptions.style.display = 'block';
+      }, 1000);  // 1 second
+    });
+
+    button.addEventListener('mouseup', function() {
+      clearTimeout(pressTimer);
+    });
+
+    // Hide options when an option is clicked
+    buttonPressOptions.addEventListener('click', function() {
+      buttonPressOptions.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

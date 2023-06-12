@@ -649,11 +649,12 @@ class SimpleKeyboard {
    */
   this.holdInteractionTimeout = window.setTimeout(() => {
     if (this.getMouseHold()) {
-      this.handleButtonClicked(button);
+      this.handleButtonClicked(button)
       
       // Call the onLongPress function if it's defined
-      if (typeof this.options.onLongPress === "function") {
-        this.options.onLongPress(button);
+      if (typeof this.options.onLongPress === "function")
+      {
+        this.options.onLongPress(button)
       }
 
       this.handleButtonHold(button);
