@@ -660,7 +660,7 @@ class SimpleKeyboard {
     } else {
       clearTimeout(this.holdInteractionTimeout);
     }
-  }, 100);
+  }, 1000);
     if (this.holdTimeout) clearTimeout(this.holdTimeout);
 
     /**
